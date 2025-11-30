@@ -1,196 +1,111 @@
-\# 🚀 Telegram History Cleaner (TG-HC)
+# Telegram Messages Cleaner
 
-
-
-A powerful, command-line utility built with `Telethon` to safely and precisely delete your own outgoing messages within a specific range defined by text checkpoints in any Telegram chat, group, or channel.
-
-
-
-This tool is designed for users who need fine-grained control over their message history without triggering Telegram's rate limits.
-
-
+command-line utility built with `Telethon` to safely and precisely delete your own outgoing messages within a specific range defined by text checkpoints in any Telegram chat, group, or channel.
 
 ---
 
+## ✨ Features
 
+* **Precise Range Deletion:** Define the start and end of the deletion range using specific text phrases (checkpoints).
 
-\## ✨ Features
+* **Safety Measures:** Implements random, short delays between message deletions and longer pauses every 100 messages to prevent account suspension due to Telegram's rate limits.
 
+* **Automatic Localization:** Automatically detects your operating system's language settings and loads the corresponding interface text.
 
-
-\* \*\*Precise Range Deletion:\*\* Define the start and end of the deletion range using specific text phrases (checkpoints).
-
-\* \*\*Safety Measures:\*\* Implements random, short delays between message deletions and longer pauses every 100 messages to prevent account suspension due to Telegram's rate limits.
-
-\* \*\*Automatic Localization (i18n):\*\* Automatically detects your operating system's language settings and loads the corresponding interface text (e.g., `ru.py`, `de.py`).
-
-\* \*\*Channel ID Conversion:\*\* Automatically handles large public channel IDs (e.g., `100xxxxxxxxxx`) by converting them to the required format (`-100xxxxxxxxxx`).
-
-\* \*\*Minimalist Interface:\*\* Clean, focused menu designed solely for history management (stats function was removed for performance).
-
-
-
----
-
-
-
-\## 🛑 Important Limitation (Checkpoint Text Search)
-
-
-
-\*\*The current version uses text search to define the range, which has a critical limitation:\*\*
-
-
-
-When setting the \*\*End Checkpoint\*\* (the oldest message to delete), the tool currently finds the \*\*newest message\*\* containing that phrase within the scanned history.
-
-
-
-\* \*\*Problem:\*\* If the phrase you use (e.g., "hello") is repeated many times in the chat, the deletion range will be \*\*cut short\*\* and will not reach the oldest occurrences of that phrase.
-
-\* \*\*Temporary Solution:\*\* Always use \*\*unique, long, or highly specific phrases\*\* for both the Start and End Checkpoints to guarantee the range is set correctly.
-
-
-
-> 💡 \*\*Future Development:\*\* This issue will be resolved by replacing text-based checkpoints with the more accurate \*\*Message ID (or Message Link)\*\* input.
-
-
-
----
-
-
-
-\## 🛠️ Installation \& Setup
-
-
-
-\### Prerequisites
-
-
-
-\* Python 3.8+
-
-\* A Telegram API Key (`API\_ID` and `API\_HASH`). You can get one from \[my.telegram.org](https://my.telegram.org).
-
-
-
-\### Steps
-
-
-
-1\.  \*\*Clone the Repository:\*\*
-
-&nbsp;   ```bash
-
-&nbsp;   git clone \[https://github.com/YourUsername/tg\_manager](https://github.com/YourUsername/tg\_manager)
-
-&nbsp;   cd tg\_manager
-
-&nbsp;   ```
-
-
-
-2\.  \*\*Create Virtual Environment (Recommended):\*\*
-
-&nbsp;   ```bash
-
-&nbsp;   python -m venv venv
-
-&nbsp;   source venv/bin/activate  # On Windows: venv\\Scripts\\activate
-
-&nbsp;   ```
-
-
-
-3\.  \*\*Install Dependencies:\*\*
-
-&nbsp;   ```bash
-
-&nbsp;   pip install -r requirements.txt
-
-&nbsp;   # You will need Telethon and python-dotenv
-
-&nbsp;   ```
-
-
-
-4\.  \*\*Configure Environment (`.env` file):\*\*
-
-&nbsp;   Create a file named \*\*`.env`\*\* in the root directory (`tg\_manager/`) and populate it with your Telegram credentials:
-
-
-
-&nbsp;   ```env
-
-&nbsp;   # .env
-
-&nbsp;   API\_ID=YOUR\_API\_ID\_HERE
-
-&nbsp;   API\_HASH=YOUR\_API\_HASH\_HERE
-
-&nbsp;   SESSION\_NAME=my\_session\_name
-
-&nbsp;   ```
-
-
-
----
-
-
-
-\## 🚀 Usage
-
-
-
-1\.  \*\*Run the script:\*\*
-
-&nbsp;   ```bash
-
-&nbsp;   python main.py
-
-&nbsp;   ```
-
-
-
-2\.  \*\*Login:\*\* The first time you run the script, `Telethon` will prompt you to enter your phone number, password, and the code sent by Telegram. This creates the session file (`my\_session\_name.session`).
-
-
-
-3\.  \*\*Enter Target ID:\*\* Input the numerical ID of the user, group, or channel you wish to clean.
-
-&nbsp;   \* \*\*User/Group ID:\*\* Standard numerical ID (e.g., `123456789`).
-
-&nbsp;   \* \*\*Public Channel ID:\*\* Use the large positive ID (e.g., `1001641860103`), and the script will automatically convert it to the required negative format.
-
-
-
-4\.  \*\*Select Option 1 (Delete History):\*\* Follow the prompts to enter your unique phrases for the Start and End Checkpoints.
-
-
-
----
-
-
-
-\## 🌐 Supported Languages
-
-
-
-The program automatically detects your system's locale and loads the corresponding language file from `src/language/`.
-
-
+## 🌐 Supported Languages
 
 Currently supported languages:
 
+* **English** (`en.py`) 
+* **Chinese** (`zh.py`)
+* **Spanish** (`es.py`)
+
+To add a new language, simply create a file named `**.py` inside the `src/language/` directory and translate all string constants.
+
+## 📁 Structure
+
+ ```bash
+├── .env
+├── main.py
+└── src/
+    ├── config.py
+    ├── client.py
+    ├── language/
+    └── actions.py
+```
+## 🚀 Usage
+
+1.  **Run the script:**
+
+    ```bash
+    python main.py
+    ```
+
+2.  **Login:** The first time you run the script, `Telethon` will prompt you to enter your phone number, password, and the code sent by Telegram. This creates the session file (`my_session_name.session`).
+
+3.  **Enter Target ID:** Input the numerical ID of the user, group, or channel you wish to clean.
+    * **User/Group ID:** Standard numerical ID (e.g., `123456789`).
+    * **Public Channel ID:** Use the large positive ID (e.g., `1646810103`), and the script will automatically convert it to the required negative format.
+
+4. **Show Chat/User ID:**  
+   Go to Telegram’s **Advanced Settings**, scroll to the bottom, open **Experimental Settings**, and enable **“Show IDs”**.  
+   After that, Telegram will display the ID of any chat, group, or user directly in its info panel.
+
+### Menu Options
+
+| Option | Action |
+| :---: | :--- |
+| **1** | **Delete messages in range:** Starts the history cleaning process between two checkpoints. |
+| **2** | **Change interlocutor ID:** Allows you to switch to a different chat or user. |
+| **3** | **Exit:** Disconnects the client and closes the program. |
+
+### Setting Checkpoints (Option 1)
+
+When you choose **Option 1**, the bot will ask for two key phrases:
+
+1.  **Start Checkpoint (Newest Message):** Enter a unique phrase from the **newest message** you want to delete.
+2.  **End Checkpoint (Oldest Message):** Enter a unique phrase from the **oldest message** you want to delete.
+
+> **❗ CRITICAL NOTE:** **Do not** use phrases that repeat frequently (like "hello" or "ok") for the **End Checkpoint**. Always choose a **unique, long, or specific phrase** to ensure the entire desired range is selected for deletion.
 
 
-\* \*\*English\*\* (`en.py`) - Default fallback.
+## 🛠️ Installation & Setup
 
-\* \*\*Russian\*\* (`ru.py`)
+### Prerequisites
 
-\* \*\*...\*\* (Add more language codes here)
+* A Telegram API Key (`API_ID` and `API_HASH`). You can get one from [my.telegram.org](https://my.telegram.org).
 
+### Steps
 
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/eug0x/telegram_msg_cleaner
+    
+    cd tg_manager
+    ```
 
-To add a new language (e.g., Ukrainian), simply create a file named `uk.py` inside the `src/language/` directory and translate all string constants.
+3.  **Install Dependencies:**
+    ```bash
+    pip install -r requirements.txt
+    ```
 
+4.  **Configure Environment (`.env` file):**
+    Create a file named **`.env`** in the root directory (`tg_manager/`) and populate it with your Telegram credentials:
+    * A Telegram API Key (`API_ID` and `API_HASH`). You can get one from [my.telegram.org](https://my.telegram.org).
+
+    ```env
+    python main.py
+    ```
+
+## 🌟 Future Updates
+
+### 1. Precision & Logging Upgrade
+* **Message Link/ID Input:** Checkpoints will transition from text phrases to **direct message links or IDs** for guaranteed accuracy and better logging.
+
+### 2. Performance & Scalability
+* **Dynamic Scan Range:** Users will be able to set a **custom limit** for the message scan (e.g., scan the last 500 or 50,000 messages) to significantly speed up searches or find very old history.
+
+### 3. Expanded Deletion & Analytics
+* **Delete Others' Messages:** Add the option to delete messages sent by other users (requires admin privileges).
+* **Time-Based Message Count:** Introduce a feature to scan and **calculate the total number of messages** sent within a **private chat** over a specified date range.
+---
