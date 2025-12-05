@@ -5,12 +5,25 @@ import importlib.util
 import os
 
 def load_strings():
-    try:
-        sys_lang = locale.getdefaultlocale()[0]
-        lang_code = sys_lang.split('_')[0].lower()
-    except Exception:
-        lang_code = 'en'
-        
+    lang_code = 'en' 
+
+    for var in ['LANG', 'LC_ALL', 'LC_MESSAGES']:
+        env_lang = os.environ.get(var)
+        if env_lang:
+            lang_code = env_lang.split('.')[0].split('_')[0].lower()
+            if lang_code and lang_code not in ('c', 'posix'):
+                break
+    
+    if lang_code in ('c', 'posix', 'en'):
+        try:
+            sys_lang = locale.getdefaultlocale()[0]
+            if sys_lang:
+                new_lang_code = sys_lang.split('_')[0].lower()
+                if new_lang_code:
+                    lang_code = new_lang_code
+        except Exception:
+            pass
+            
     base_dir = os.path.dirname(os.path.abspath(__file__))
     lang_file_path = os.path.join(base_dir, 'src', 'language', f'{lang_code}.py')
     
