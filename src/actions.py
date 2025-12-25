@@ -1,7 +1,6 @@
 import asyncio
 import random
 from telethon import TelegramClient
-import src.strings as STR 
 import sys
 
 def get_entity_title(entity):
