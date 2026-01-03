@@ -71,10 +71,6 @@ When you choose **Option 1**, the bot will ask for two key phrases:
 
 ## 🛠️ Installation & Setup
 
-### Prerequisites
-
-* A Telegram API Key (`API_ID` and `API_HASH`). You can get one from [my.telegram.org](https://my.telegram.org).
-
 ### Steps
 
 1.  **Clone the Repository:**
@@ -109,3 +105,4 @@ When you choose **Option 1**, the bot will ask for two key phrases:
 * **Delete Others' Messages:** Add the option to delete messages sent by other users (requires admin privileges).
 * **Time-Based Message Count:** Introduce a feature to scan and **calculate the total number of messages** sent within a **private chat** over a specified date range.
 ---
+
